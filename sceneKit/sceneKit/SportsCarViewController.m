@@ -28,7 +28,7 @@
     _isLeft = true;
     
     // 创建一个scene
-    SCNScene *scene = [SCNScene sceneNamed:@"art.scnassets/sportsCar/sportsCar.scn"];
+    SCNScene *scene = [SCNScene sceneNamed:@"art.scnassets/sportsCar/sportCar.scn"];
     
     self.cameraHodlerNode = [SCNNode node];
     
