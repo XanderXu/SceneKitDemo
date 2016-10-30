@@ -22,7 +22,7 @@
     cameraNode.camera = [SCNCamera camera];
     [scene.rootNode addChildNode:cameraNode];
     
-    // place the camera旋转相机
+    // place the camera放置相机
     cameraNode.position = SCNVector3Make(0, 0, 15);
     
     // create and add a light to the scene创建并添加一个光源到场景上
