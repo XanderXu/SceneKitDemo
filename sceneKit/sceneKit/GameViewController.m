@@ -14,53 +14,53 @@
 {
     [super viewDidLoad];
 
-    // create a new scene
+    // create a new scene创建一个新的场景
     SCNScene *scene = [SCNScene sceneNamed:@"art.scnassets/ship.scn"];
 
-    // create and add a camera to the scene
+    // create and add a camera to the scene创建并添加一个相机到场景上
     SCNNode *cameraNode = [SCNNode node];
     cameraNode.camera = [SCNCamera camera];
     [scene.rootNode addChildNode:cameraNode];
     
-    // place the camera
+    // place the camera旋转相机
     cameraNode.position = SCNVector3Make(0, 0, 15);
     
-    // create and add a light to the scene
+    // create and add a light to the scene创建并添加一个光源到场景上
     SCNNode *lightNode = [SCNNode node];
     lightNode.light = [SCNLight light];
     lightNode.light.type = SCNLightTypeOmni;
     lightNode.position = SCNVector3Make(0, 10, 10);
     [scene.rootNode addChildNode:lightNode];
     
-    // create and add an ambient light to the scene
+    // create and add an ambient light to the scene创建并添加一个环境光源到场景上
     SCNNode *ambientLightNode = [SCNNode node];
     ambientLightNode.light = [SCNLight light];
     ambientLightNode.light.type = SCNLightTypeAmbient;
     ambientLightNode.light.color = [UIColor darkGrayColor];
     [scene.rootNode addChildNode:ambientLightNode];
     
-    // retrieve the ship node
+    // retrieve the ship node拿到ship节点
     SCNNode *ship = [scene.rootNode childNodeWithName:@"ship" recursively:YES];
     
-    // animate the 3d object
+    // animate the 3d object添加动画
     [ship runAction:[SCNAction repeatActionForever:[SCNAction rotateByX:0 y:2 z:0 duration:1]]];
     
-    // retrieve the SCNView
+    // retrieve the SCNView拿到SCNView
     SCNView *scnView = (SCNView *)self.view;
     
-    // set the scene to the view
+    // set the scene to the view设置场景到view上
     scnView.scene = scene;
     
-    // allows the user to manipulate the camera
+    // allows the user to manipulate the camera允许用户控制相机
     scnView.allowsCameraControl = YES;
         
-    // show statistics such as fps and timing information
+    // show statistics such as fps and timing information展示统计信息如fps和时间信息
     scnView.showsStatistics = YES;
 
-    // configure the view
+    // configure the view配置view的背景色
     scnView.backgroundColor = [UIColor blackColor];
     
-    // add a tap gesture recognizer
+    // add a tap gesture recognizer添加点击手势
     UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     NSMutableArray *gestureRecognizers = [NSMutableArray array];
     [gestureRecognizers addObject:tapGesture];
@@ -70,26 +70,26 @@
 
 - (void) handleTap:(UIGestureRecognizer*)gestureRecognize
 {
-    // retrieve the SCNView
+    // retrieve the SCNView拿到SCNView
     SCNView *scnView = (SCNView *)self.view;
     
-    // check what nodes are tapped
+    // check what nodes are tapped检查哪个节点被点击了
     CGPoint p = [gestureRecognize locationInView:scnView];
     NSArray *hitResults = [scnView hitTest:p options:nil];
     
-    // check that we clicked on at least one object
+    // check that we clicked on at least one object检查被点击的最新的一个物体
     if([hitResults count] > 0){
-        // retrieved the first clicked object
+        // retrieved the first clicked object拿到被点击的第一个物体
         SCNHitTestResult *result = [hitResults objectAtIndex:0];
         
-        // get its material
+        // get its material得到要材质
         SCNMaterial *material = result.node.geometry.firstMaterial;
         
-        // highlight it
+        // highlight it高亮显示
         [SCNTransaction begin];
         [SCNTransaction setAnimationDuration:0.5];
         
-        // on completion - unhighlight
+        // on completion - unhighlight取消高亮
         [SCNTransaction setCompletionBlock:^{
             [SCNTransaction begin];
             [SCNTransaction setAnimationDuration:0.5];
